@@ -11,8 +11,15 @@ from dash.dependencies import Input, Output, State, ALL
 
 @router.route("/")
 def index():
-    return template_layout(dbc.Container([html.Div(id="test-div"), upload.modal]))
+    return template_layout("WHOOP WHOOP")
 
+@router.route("/upload")
+def upload_page():
+    return template_layout(upload.modal)
+
+@router.route("/table/<table_name>")
+def tables_page(table_name):
+    return template_layout(table_view(table_name))
 
 
 if __name__ == "__main__":
