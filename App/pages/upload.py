@@ -13,7 +13,6 @@ from app import app, db_connection
 def parse_data(content, filename):
     content_string = content.split(".")[1].split(",")[-1]
     decoded = base64.b64decode(content_string)
-    print("FILENAME", filename)
     if "csv" in filename:
         return  pd.read_csv(io.StringIO(decoded.decode('utf-8')))
     elif "xls" in filename:
@@ -31,7 +30,6 @@ def load_data_from_csv(content, filename):
         raise PreventUpdate
     else:
         table_name = json.loads(dash.callback_context.triggered[0]["prop_id"].split(".")[0])["name"]
-        print(table_name)
         df = parse_data(content, filename)
         df.to_sql(table_name, db_connection)
         return f"{filename} Loaded!"
