@@ -10,4 +10,3 @@ app = dash.Dash(
 router = Router()
 router.register_callbacks(app)
 db_connection = sqlite3.connect(":memory:", check_same_thread=False)
-

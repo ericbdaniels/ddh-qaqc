@@ -10,7 +10,7 @@ navbar = dbc.NavbarSimple(
                 dbc.DropdownMenuItem("More pages", header=True),
                 dbc.DropdownMenuItem("QA/QC", href=""),
                 dbc.DropdownMenuItem("Compositing", href=""),
-                dbc.DropdownMenuItem("Data Exploration", href="")
+                dbc.DropdownMenuItem("Data Exploration", href=""),
             ],
             nav=True,
             in_navbar=True,
