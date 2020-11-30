@@ -1,5 +1,4 @@
 import dash_bootstrap_components as dbc
-import dash_core_components as dcc
 
 
 navbar = dbc.NavbarSimple(
@@ -24,5 +23,5 @@ navbar = dbc.NavbarSimple(
 )
 
 
-def template_layout(content):
+def layout(content):
     return dbc.Container(children=[navbar, content], fluid=True)
