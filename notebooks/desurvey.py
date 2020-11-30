@@ -51,7 +51,7 @@ def mincurve_desurvey(
     else:
         rf = 1  # balanced tangential
 
-    z = 0.5 * length * (np.cos(i1) + np.cos(i2)) * rf
+    z = 0.5 * length * (np.cos(i1) + np.cos(i2)) * rf * -1
     y = 0.5 * length * (np.sin(i1) * np.cos(a1) + np.sin(i2) * np.cos(a2)) * rf
     x = 0.5 * length * (np.sin(i1) * np.sin(a1) + np.sin(i2) * np.sin(a2)) * rf
 
