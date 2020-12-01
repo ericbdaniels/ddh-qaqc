@@ -1,5 +1,9 @@
 import dash_bootstrap_components as dbc
 
+table_views = [
+    dbc.DropdownMenuItem(f"View Table: {name}", href=f"/table/{name}")
+    for name in ["assay", "collar", "survey", "desurvey"]
+]
 
 navbar = dbc.NavbarSimple(
     children=[
@@ -7,10 +11,10 @@ navbar = dbc.NavbarSimple(
         dbc.DropdownMenu(
             children=[
                 dbc.DropdownMenuItem("More pages", header=True),
-                dbc.DropdownMenuItem("QA/QC", href=""),
-                dbc.DropdownMenuItem("Compositing", href=""),
-                dbc.DropdownMenuItem("Data Exploration", href=""),
-            ],
+                dbc.DropdownMenuItem("Upload", href="/upload"),
+                dbc.DropdownMenuItem("Desurvey", href="/desurvey"),
+            ]
+            + table_views,
             nav=True,
             in_navbar=True,
             label="More",
