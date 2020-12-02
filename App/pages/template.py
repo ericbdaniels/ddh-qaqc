@@ -13,6 +13,7 @@ navbar = dbc.NavbarSimple(
                 dbc.DropdownMenuItem("More pages", header=True),
                 dbc.DropdownMenuItem("Upload", href="/upload"),
                 dbc.DropdownMenuItem("Desurvey", href="/desurvey"),
+                dbc.DropdownMenuItem("Composite", href="/composite"),
             ]
             + table_views,
             nav=True,

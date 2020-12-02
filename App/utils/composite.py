@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 
 def composite(ifrom, ito, values, comp_length=1.0, min_comp_length=-1.0):
@@ -106,4 +107,10 @@ def composite(ifrom, ito, values, comp_length=1.0, min_comp_length=-1.0):
             cvar[i] = np.nan
             cacum[i] = np.nan
 
-    return cfrom, cto, clen, cvar, cacum
+    return pd.DataFrame({"from": cfrom, "to": cto, "len": clen, "value": cvar})
+
+
+def composite_dh(dh, comp_len, var_name):
+    comps = composite(dh.FROM.values, dh.TO.values, dh[var_name].values, comp_len)
+    comps.rename(columns={"value": var_name}, inplace=True)
+    return comps.reset_index()

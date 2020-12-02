@@ -1,5 +1,5 @@
 from app import app, router, db_connection
-from pages import template, upload, data_table, home, desurvey
+from pages import template, upload, data_table, home, desurvey, composite
 from utils import misc
 
 
@@ -24,6 +24,11 @@ def desurvey_page():
         return template.layout(desurvey.content)
     else:
         return template.layout("DB ERROR")
+
+
+@router.route("/composite")
+def composite_page():
+    return template.layout(composite.load_content(db_connection))
 
 
 if __name__ == "__main__":
