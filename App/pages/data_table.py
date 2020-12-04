@@ -14,13 +14,12 @@ def load_table(df, name):
         sort_action="native",
         sort_mode="multi",
         column_selectable="single",
-        row_selectable="multi",
-        row_deletable=True,
         selected_columns=[],
         selected_rows=[],
         page_action="native",
         page_current=0,
-        page_size=10,
+        page_size=100,
+        export_format="csv",
     )
 
 
