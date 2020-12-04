@@ -9,6 +9,7 @@ import base64
 import io
 import json
 from app import app, db_connection
+from utils.desurvey import desurvey_assay
 
 
 def parse_data(content, filename):
@@ -81,7 +82,14 @@ modal = dbc.Modal(
                         dbc.Tab(tab_content("collar"), label="Collar"),
                         dbc.Tab(tab_content("survey"), label="Survey"),
                     ]
-                )
+                ),
+                dbc.Button(
+                    "Desurvey Assays",
+                    id="desurvey-assay-btn",
+                    color="primary",
+                    className="mr-1",
+                ),
+                html.Div(id="desurvey-assay-output"),
             ]
         ),
     ],
@@ -90,3 +98,20 @@ modal = dbc.Modal(
     centered=True,
     autoFocus=True,
 )
+
+
+@app.callback(
+    Output("desurvey-assay-output", "children"), Input("desurvey-assay-btn", "n_clicks")
+)
+def desurvey_raw_assays(n_clicks):
+    if n_clicks is not None:
+        assay = pd.read_sql("SELECT * from  assay", db_connection)
+        assay["midpt"] = (assay.FROM + assay.TO) / 2
+        survey = pd.read_sql("SELECT * from  survey", db_connection)
+        collar = pd.read_sql("SELECT * from collar", db_connection)
+        desurveyed_assays = desurvey_assay(assay, survey, collar)
+        print(desurveyed_assays.columns)
+        desurveyed_assays.to_sql("desurveyed_assay", db_connection)
+        return "Assay Desurvey Complete"
+    else:
+        raise PreventUpdate
