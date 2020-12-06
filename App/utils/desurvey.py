@@ -61,8 +61,8 @@ def mincurve_desurvey(
 
 def desurvey(survey, collar, interp_type="mincurve"):
     def get_coords(row):
+        icollar = collar[collar.DHID == row.DHID]
         if np.isnan(row.length):
-            icollar = collar[collar.DHID == row.DHID]
             return {
                 "DHID": row.DHID,
                 "X": icollar.X.values[0],
@@ -74,12 +74,11 @@ def desurvey(survey, collar, interp_type="mincurve"):
                 x, y, z = mincurve_desurvey(
                     row.length, row.AZIMUTH, row.DIP, row.AZIMUTH2, row.DIP2
                 )
-                return {"DHID": row.DHID, "X": x, "Y": y, "Z": -z}
             elif interp_type == "tangent":
                 x, y, z = tangent_desurvey(row.length, row.AZIMUTH, row.DIP)
-                return {"DHID": row.DHID, "X": x, "Y": y, "Z": -z}
-            else:
-                raise ValueError(f"Invalid interpolation method: {interp_type}")
+            x = x + icollar.X.values[0]
+            y = y + icollar.Y.values[0]
+            return {"DHID": row.DHID, "X": x, "Y": y, "Z": -z}
 
     bhid_groups = survey.groupby("DHID")
     survey["length"] = bhid_groups["DEPTH"].diff()
