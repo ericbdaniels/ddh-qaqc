@@ -90,4 +90,4 @@ def load_content(conn):
     )
     table = table = misc.load_table(assay_df)
 
-    return dbc.Container([text_row, stats_row, plots_row, table])
+    return dbc.Container([text_row, stats_row, plots_row, table], fluid=True)

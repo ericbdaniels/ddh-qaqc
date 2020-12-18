@@ -29,4 +29,6 @@ navbar = dbc.NavbarSimple(
 
 
 def layout(content):
-    return dbc.Container(children=[navbar, content], fluid=True)
+    return dbc.Container(
+        children=[navbar, content], fluid=True, className="col-10 offset-lg-1"
+    )

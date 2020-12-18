@@ -76,8 +76,6 @@ def desurvey(survey, collar, interp_type="mincurve"):
                 )
             elif interp_type == "tangent":
                 x, y, z = tangent_desurvey(row.length, row.AZIMUTH, row.DIP)
-            x = x + icollar.X.values[0]
-            y = y + icollar.Y.values[0]
             return {"DHID": row.DHID, "X": x, "Y": y, "Z": -z}
 
     bhid_groups = survey.groupby("DHID")
@@ -85,6 +83,8 @@ def desurvey(survey, collar, interp_type="mincurve"):
     survey["AZIMUTH2"] = bhid_groups["AZIMUTH"].shift(1)
     survey["DIP2"] = bhid_groups["DIP"].shift(1)
     coords = survey.apply(get_coords, axis=1, result_type="expand")
+    coords["X"] = coords.groupby("DHID")["X"].cumsum()
+    coords["Y"] = coords.groupby("DHID")["Y"].cumsum()
     coords["Z"] = coords.groupby("DHID")["Z"].cumsum()
     return coords
 

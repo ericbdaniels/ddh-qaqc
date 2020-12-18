@@ -38,7 +38,7 @@ def generate_var_select_form(assay_column_names):
 comp_len_form = dbc.FormGroup(
     [
         dbc.Label("Composite Length"),
-        dbc.Input(type="number", min=0, value=5),
+        dbc.Input(id="comp-length-input", type="number", min=0, value=5),
         dbc.Label("Minimum Interval"),
         dbc.Input(type="number", value=-1),
         dbc.FormText(
@@ -66,9 +66,35 @@ def load_content(conn):
     assay_column_names = [i[1] for i in query_results]
     content = dbc.Container(
         [
-            readme_text,
-            generate_comp_input_form(assay_column_names),
-            html.Div(id="comp-output"),
+            dbc.Row(readme_text),
+            dbc.Row(
+                dbc.Col(
+                    [
+                        generate_comp_input_form(assay_column_names),
+                        html.Div(id="comp-output"),
+                    ],
+                    width=4,
+                    className="mx-auto",
+                )
+            ),
+            dbc.Row(html.Div(id="comps-output")),
         ]
     )
     return content
+
+
+@app.callback(
+    Output("comps-output", "children"),
+    Input("comps-btn", "n_clicks"),
+    [State("comp-var-select-dropdown", "value"), State("comp-length-input", "value")],
+)
+def midpt_composite(n_clicks, comp_var_name, comp_length):
+    if n_clicks is not None:
+        desurv_assay = pd.read_sql("SELECT * from  desurveyed_assay", db_connection)
+        comps = desurv_assay.groupby("DHID").apply(
+            composite_dh, comp_length, comp_var_name
+        )
+        comps.to_sql(f"comps_{comp_var_name}_{comp_length}", db_connection)
+        return "Compositing Completed"
+    else:
+        raise PreventUpdate
