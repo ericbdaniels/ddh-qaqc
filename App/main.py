@@ -45,4 +45,24 @@ def univariate_eda_page():
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    from argparse import ArgumentParser
+
+    parser = ArgumentParser()
+    parser.add_argument(
+        "-d", "--desktop", help="Run as a desktop App", action="store_true"
+    )
+    args = parser.parse_args()
+    if args.desktop:
+        from pyfladesk import init_gui
+
+        init_gui(
+            app.server,
+            port=5000,
+            width=1200,
+            height=800,
+            window_title="DDH-QAQC",
+            icon="App/assets/favicon.ico",
+            argv=None,
+        )
+    else:
+        app.run_server(debug=True)
