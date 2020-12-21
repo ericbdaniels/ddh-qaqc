@@ -14,6 +14,7 @@ navbar = dbc.NavbarSimple(
                 dbc.DropdownMenuItem("Upload", href="/upload"),
                 dbc.DropdownMenuItem("Desurvey", href="/desurvey"),
                 dbc.DropdownMenuItem("Composite", href="/composite"),
+                dbc.DropdownMenuItem("EDA: Composite Length", href="/eda-univariate"),
             ]
             + table_views,
             nav=True,

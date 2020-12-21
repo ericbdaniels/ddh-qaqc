@@ -1,4 +1,3 @@
-from app import db_connection
 import dash_table
 
 
@@ -33,3 +32,9 @@ def load_table(df):
         style_cell={"padding": "5px"},
         style_table={"overflowX": "auto"},
     )
+
+
+def run_query(conn, qry_str):
+    cursor = conn.cursor()
+    qry_result = cursor.execute(qry_str)
+    return [i[0] for i in qry_result.fetchall()]

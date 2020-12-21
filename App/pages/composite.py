@@ -94,7 +94,7 @@ def midpt_composite(n_clicks, comp_var_name, comp_length):
         comps = desurv_assay.groupby("DHID").apply(
             composite_dh, comp_length, comp_var_name
         )
-        comps.to_sql(f"comps_{comp_var_name}_{comp_length}", db_connection)
+        comps.to_sql(f"composites", db_connection, if_exists="append")
         return "Compositing Completed"
     else:
         raise PreventUpdate

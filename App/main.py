@@ -1,13 +1,5 @@
 from app import app, router, db_connection
-from pages import (
-    template,
-    upload,
-    data_table,
-    home,
-    desurvey,
-    composite,
-    univariate_eda,
-)
+from pages import template, upload, data_table, home, desurvey, composite, eda
 from utils import misc
 
 
@@ -41,7 +33,7 @@ def composite_page():
 
 @router.route("/eda-univariate")
 def univariate_eda_page():
-    return template.layout(univariate_eda.load_content(db_connection))
+    return template.layout(eda.layout)
 
 
 if __name__ == "__main__":
