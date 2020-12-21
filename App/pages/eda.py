@@ -20,9 +20,7 @@ def populate_comp_len(comp_var):
     if comp_var is None:
         raise PreventUpdate
     qry_str = f'SELECT DISTINCT comp_length FROM composites WHERE var = "{comp_var}";'
-    print(qry_str)
     comp_lengths = run_query(db_connection, qry_str)
-    print(comp_lengths)
     return [{"label": str(i), "value": i} for i in comp_lengths], False
 
 
