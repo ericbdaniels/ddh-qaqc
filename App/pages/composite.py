@@ -90,7 +90,7 @@ def load_content(conn):
 )
 def midpt_composite(n_clicks, comp_var_name, comp_length):
     if n_clicks is not None:
-        desurv_assay = pd.read_sql("SELECT * from  desurveyed_assay", db_connection)
+        desurv_assay = pd.read_sql("SELECT * from  desurvey", db_connection)
         comps = desurv_assay.groupby("DHID").apply(
             composite_dh, comp_length, comp_var_name
         )

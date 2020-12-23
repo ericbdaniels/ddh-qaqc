@@ -33,7 +33,7 @@ def composite_page():
 
 @router.route("/eda-univariate")
 def univariate_eda_page():
-    return template.layout(eda.layout)
+    return template.layout(eda.load_page(db_connection))
 
 
 if __name__ == "__main__":

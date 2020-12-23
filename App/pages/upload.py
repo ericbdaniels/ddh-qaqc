@@ -110,7 +110,7 @@ def desurvey_raw_assays(n_clicks):
         survey = pd.read_sql("SELECT * from  survey", db_connection)
         collar = pd.read_sql("SELECT * from collar", db_connection)
         desurveyed_assays = desurvey_assay(assay, survey, collar)
-        desurveyed_assays.to_sql("desurveyed_assay", db_connection)
+        desurveyed_assays.to_sql("desurvey", db_connection)
         return "Assay Desurvey Complete"
     else:
         raise PreventUpdate

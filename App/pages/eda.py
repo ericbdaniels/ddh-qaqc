@@ -86,7 +86,7 @@ def load_plots(n_clicks, comps_var, comp_lengths):
     for comp_len in comp_lengths:
         icolor = next(color_cycle)
         if comp_len == "assay":
-            qry_str = f"SELECT X,Y,Z, {comps_var} from desurveyed_assay;"
+            qry_str = f"SELECT X,Y,Z, {comps_var} from desurvey;"
             data = pd.read_sql(qry_str, db_connection)
             data.rename(columns={comps_var: "value"}, inplace=True)
             name = "Raw Assay"
@@ -183,65 +183,69 @@ def load_plots(n_clicks, comps_var, comp_lengths):
     return plots_layout, False
 
 
-modal = dbc.Modal(
-    id="comps-select-modal",
-    children=[
-        dbc.ModalHeader("Select Composites to View", className="p-2"),
-        dbc.ModalBody(
-            children=[
-                dbc.Form(
-                    [
-                        dbc.FormGroup(
-                            [
-                                dbc.Label("Composited Variable"),
-                                dcc.Dropdown(
-                                    id="comp-var-select",
-                                    options=[
-                                        {"label": v, "value": v}
-                                        for v in comps_var_query(db_connection)
-                                    ],
-                                    style={"padding": "5px"},
-                                ),
-                            ]
-                        ),
-                        dbc.FormGroup(
-                            [
-                                dbc.Label("Composite Length(s)"),
-                                dcc.Dropdown(
-                                    id="comp-len-select",
-                                    multi=True,
-                                    disabled=True,
-                                    style={"padding": "5px"},
-                                ),
-                            ]
-                        ),
-                        dbc.Button(
-                            "View Data",
-                            id="view-comps-btn",
-                            color="primary",
-                            className="mr-1",
-                            disabled=True,
-                        ),
-                    ]
-                )
-            ]
-        ),
-    ],
-    size="lg",
-    is_open=True,
-    centered=True,
-    autoFocus=True,
-)
+def data_select_modal(conn):
+    modal = dbc.Modal(
+        id="comps-select-modal",
+        children=[
+            dbc.ModalHeader("Select Composites to View", className="p-2"),
+            dbc.ModalBody(
+                children=[
+                    dbc.Form(
+                        [
+                            dbc.FormGroup(
+                                [
+                                    dbc.Label("Composited Variable"),
+                                    dcc.Dropdown(
+                                        id="comp-var-select",
+                                        options=[
+                                            {"label": v, "value": v}
+                                            for v in comps_var_query(conn)
+                                        ],
+                                        style={"padding": "5px"},
+                                    ),
+                                ]
+                            ),
+                            dbc.FormGroup(
+                                [
+                                    dbc.Label("Composite Length(s)"),
+                                    dcc.Dropdown(
+                                        id="comp-len-select",
+                                        multi=True,
+                                        disabled=True,
+                                        style={"padding": "5px"},
+                                    ),
+                                ]
+                            ),
+                            dbc.Button(
+                                "View Data",
+                                id="view-comps-btn",
+                                color="primary",
+                                className="mr-1",
+                                disabled=True,
+                            ),
+                        ]
+                    )
+                ]
+            ),
+        ],
+        size="lg",
+        is_open=True,
+        centered=True,
+        autoFocus=True,
+    )
+    return modal
 
-layout = dbc.Container(
-    [
-        modal,
-        dcc.Loading(
-            dbc.Container(id="plots-container", fluid=True),
-            type="circle",
-            style={"margin-top": "25%"},
-        ),
-    ],
-    fluid=True,
-    style={"padding": "10px"},
-)
+
+def load_page(conn):
+    return dbc.Container(
+        [
+            data_select_modal(conn),
+            dcc.Loading(
+                dbc.Container(id="plots-container", fluid=True),
+                type="circle",
+                style={"margin-top": "25%"},
+            ),
+        ],
+        fluid=True,
+        style={"padding": "10px"},
+    )
