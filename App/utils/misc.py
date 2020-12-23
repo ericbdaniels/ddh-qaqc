@@ -14,7 +14,7 @@ def check_tables(conn):
 def load_table(df):
     return dash_table.DataTable(
         id="table",
-        columns=[{"name": i, "id": i} for i in df.columns[1:]],
+        columns=[{"name": i, "id": i} for i in df.columns],
         data=df.to_dict("records"),
         editable=True,
         sort_action="native",
@@ -29,8 +29,7 @@ def load_table(df):
         export_format="csv",
         style_header={"backgroundColor": "rgb(230, 230, 230)", "fontWeight": "bold"},
         style_as_list_view=True,
-        style_cell={"padding": "5px"},
-        style_table={"overflowX": "auto"},
+        style_cell={"padding": "5px", "textAlign": "center"},
     )
 
 

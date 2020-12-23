@@ -112,6 +112,7 @@ def composite(ifrom, ito, values, comp_length=1.0, min_comp_length=-1.0):
 
 def composite_dh(dh, comp_len, var_name):
     comps = composite(dh.FROM.values, dh.TO.values, dh[var_name].values, comp_len)
+    comps = comps[np.isfinite(comps.value)]
     comps["midpt"] = ((comps["to"] - comps["from"]) / 2) + comps["from"]
     comps["X"] = np.interp(comps.midpt, dh.midpt, dh.X)
     comps["Y"] = np.interp(comps.midpt, dh.midpt, dh.Y)

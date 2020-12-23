@@ -22,7 +22,8 @@ def scatter(x, y, x_name, y_name, color=None, size=None):
 
 def cdf(values: np.ndarray, **kwargs):
     quants = np.linspace(0.01, 0.99, 200)
-    quant_values = np.quantile(values, quants)
+    nan_mask = np.isfinite(values)
+    quant_values = np.quantile(values[nan_mask], quants)
     return go.Scatter(x=quant_values, y=quants, mode="lines", **kwargs)
 
 
@@ -50,7 +51,7 @@ def scatter3d(
 
 
 def figure(**kwargs):
-    f = go.Figure(layout_template="none", **kwargs)
+    f = go.Figure(layout_template="simple_white", **kwargs)
     return f
 
 
@@ -61,6 +62,8 @@ def figure_3d(**kwargs):
         layout_scene_xaxis_title="EASTING",
         layout_scene_yaxis_title="NORTHING",
         layout_scene_zaxis_title="ELEVATION",
-        **kwargs
+        layout_scene_aspectratio=dict(x=1, y=1, z=1.0),
+        layout_margin=dict(t=20, b=20, l=0, r=0),
+        **kwargs,
     )
     return f
