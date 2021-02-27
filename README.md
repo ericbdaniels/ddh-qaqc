@@ -34,6 +34,8 @@ if __name__ == "__main__":
     )
 ```
 
+If you only want the executable, grab the `ddh-qaqc.tar.gz` and extract - that has everything needed.
+
 2. Creating the EXE - this took a bit of trial and error. Pyinstaller was not automatically adding the necessary dash and plotly libraries to the output so they had to be included manually in the pyinstaller specfile (see `main_dir.spec` for more):
 
 ```
