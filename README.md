@@ -10,6 +10,9 @@ Diamond Drillhole Quality-Assurance Quality-Control (DDH-QAQC) is a small dash a
 
 An example comparing 5m composites to the original assay intervals. A small sample dataset is included in `./data`.
 
+![](./images/splash_page.png)
+![](./images/upload.png)
+![](./images/composite.png)
 ![](./images/composite_eda.png)
 
 Also, a thank you to Adrian Martinez Vargas , much of the composite code was adapted from his implementation shared on the [opengeostat github page](https://github.com/opengeostat).
